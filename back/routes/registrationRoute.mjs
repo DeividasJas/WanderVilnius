@@ -1,8 +1,9 @@
-import express from 'express'
-import { isUser } from '../middlewares/authorizationMiddleware.mjs'
+import express from 'express';
+import { newRegistartion } from '../controllers/registrationController.mjs';
+import { isUser } from '../middlewares/authorizationMiddleware.mjs';
 
-const router = express.Router()
+const router = express.Router();
 
-router.route('').get(isUser, )
+router.route('').post(isUser, newRegistartion);
 
-export default router
+export default router;

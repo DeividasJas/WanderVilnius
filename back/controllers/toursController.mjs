@@ -112,7 +112,8 @@ export const deleteTourById = async (req, res) => {
 export const registerNewTourTime = async (req, res) => {
   try {
     const { tour_id, tour_date_time } = req.body;
-    const newTourTime = await pg_registerNewTourTime(tour_id, tour_date_time);
+    const date = Date(tour_date_time)
+    const newTourTime = await pg_registerNewTourTime(tour_id, date);
     // all times are given in UTC 0,
     // thus you will have to add / remove extra hours depending on you time zone
     return res.status(201).json(newTourTime);
