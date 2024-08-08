@@ -1,12 +1,47 @@
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useTheme } from '../context/ThemeContext';
 function SignupPage() {
+  const { isDarkMode } = useTheme();
+  console.log(isDarkMode);
+  const phoneRegex = new RegExp(
+    '^\\+?(?:\\d{1,3})?[-.\\s]?(?:\\(?\\d{1,4}\\)?[-.\\s]?)?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$'
+  );
+
+  const formSchema = yup.object().shape({
+    name: yup.string().trim().required('Name cannot be blank'),
+    lastname: yup.string().trim().required('Lastname cannot be blank'),
+    phone_number: yup.string().matches(phoneRegex, 'Phone number is not valid'),
+    email: yup.string().email().required('Email cannot be blank'),
+    password: yup
+      .string()
+      .required('Password is required')
+      .min(8, 'Password must be at least 8 characters'),
+    repeat_password: yup
+      .string()
+      .required('Confirm Password is required')
+      .oneOf([yup.ref('password')], 'Passwords must match'),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    // mode: 'onBlur',
+    // mode: 'onTouched',
+    resolver: yupResolver(formSchema),
   });
+  console.log(errors);
+  const showInput = (input) => {
+    const x = document.getElementById(input);
+
+    if (x.type === 'password') {
+      x.type = 'text';
+    } else {
+      x.type = 'password';
+    }
+  };
 
   const onSubmit = (data) => {
     console.log(data);
@@ -14,53 +49,104 @@ function SignupPage() {
   return (
     <div>
       <h1>signup bro</h1>
-      <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <div>
+      <form
+        noValidate
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-wrap gap-3 '
+      >
+        <div className='relative min-w-36 w-48 lg:w-56'>
           <input
             type='text'
             placeholder='Firstname'
             id='name'
-            {...register('name', {
-              required: 'Please enter your name',
-              validate: {
-                notEmpty: (fieldValue) => {
-                  return (
-                    fieldValue.trim().length !== 0 ||
-                    'Empty name is not allowed'
-                  );
-                },
-              },
-            })}
+            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
+              isDarkMode && 'text-slate-400'
+            }`}
+            {...register('name')}
           />
           <p className='text-red-800'>{errors.name?.message}</p>
         </div>
-        <div>
+
+        <div className='relative min-w-36 w-48 lg:w-56'>
           <input
             type='text'
             placeholder='Lastname'
-            id='name'
-            {...register('lastname', {
-              required: 'Please enter your lastname',
-            })}
+            id='lastname'
+            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
+              isDarkMode && 'text-slate-400'
+            }`}
+            {...register('lastname')}
           />
           <p className='text-red-800'>{errors.lastname?.message}</p>
         </div>
-        <div>
+
+        <div className='relative min-w-36 w-48 lg:w-56'>
+          <input
+            type='tel'
+            placeholder='Phone Number'
+            id='phone_number'
+            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
+              isDarkMode && 'text-slate-400'
+            }`}
+            {...register('phone_number')}
+          />
+          <p className='text-red-800'>{errors.phone_number?.message}</p>
+        </div>
+        <div className='relative min-w-36 w-48 lg:w-56'>
           <input
             type='email'
-            placeholder='Email address'
-            id='name'
-            {...register('email', {
-              required: 'Please enter your email address',
-              validate: (fieldValue) => {
-                console.log(fieldValue);
-                return fieldValue === 'admin@mail.com' || 'You are not admin';
-              },
-            })}
+            placeholder='Email Address'
+            id='email'
+            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
+              isDarkMode && 'text-slate-400'
+            }`}
+            {...register('email')}
           />
           <p className='text-red-800'>{errors.email?.message}</p>
         </div>
-        <button type='submit'>done</button>
+
+        <div className='relative min-w-36 w-48 lg:w-56'>
+          <input
+            type='password'
+            placeholder='Password'
+            id='password'
+            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
+              isDarkMode && 'text-slate-400'
+            }`}
+            {...register('password')}
+          />
+          <input
+            type='checkbox'
+            className='absolute right-2 top-2.5'
+            onClick={() => {
+              showInput('password');
+            }}
+          />
+          <p className='text-red-800'>{errors.password?.message}</p>
+        </div>
+
+        <div className='relative min-w-36 w-48 lg:w-56'>
+          <input
+            type='password'
+            placeholder='Repeat Password'
+            id='repeat_password'
+            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
+              isDarkMode && 'text-slate-400'
+            }`}
+            {...register('repeat_password')}
+          />
+          <input
+            type='checkbox'
+            className='absolute right-2 top-2.5'
+            onClick={() => {
+              showInput('repeat_password');
+            }}
+          />
+          <p className='text-red-800 w-full'>
+            {errors.repeat_password?.message}
+          </p>
+        </div>
+        <button type='submit' className="btn btn-neutral">Register</button>
       </form>
     </div>
   );

@@ -1,36 +1,36 @@
 import { useState, useRef, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
+
 import LoginForm from './components/LoginForm';
+import ThemeController from './components/ThemeController';
 
 function Layout() {
-  const [showLogin, setShowLogin] = useState(false);
-  const closeSidebar = () => {
-    document.getElementById('my-drawer-3').checked = false;
-  };
   const token = window.localStorage.getItem('token');
-  //   document.addEventListener('click', (e) => {
-  //     if (e.target.matches('.login')) {
-  //       setShowLogin(false);
-  //     }
-  //   });
 
+  const [showLogin, setShowLogin] = useState(false);
+  const location = useLocation();
+  const shouldShowLogin = location.pathname !== '/login';
   const loginRef = useRef(null);
-  const handleClickLogin = (event) => {
+  const removeLoginFromNavbar = (event) => {
     if (loginRef.current && !loginRef.current.contains(event.target)) {
       // Perform action here when click is outside the element
       setShowLogin(false);
     }
   };
+
   useEffect(() => {
     // Attach the event listener to the document
-    document.addEventListener('mousedown', handleClickLogin);
+    document.addEventListener('mousedown', removeLoginFromNavbar);
 
     // Cleanup the event listener on component unmount
     return () => {
-      document.removeEventListener('mousedown', handleClickLogin);
+      document.removeEventListener('mousedown', removeLoginFromNavbar);
     };
   }, []);
+
+  const closeSidebar = () => {
+    document.getElementById('my-drawer-3').checked = false;
+  };
   return (
     <>
       <div className='drawer'>
@@ -60,15 +60,15 @@ function Layout() {
               </label>
             </div>
 
-            <div className='mx-2 flex-1 px-2 lg:text-lg'>
+            <div className='mx-2 flex-1 flex-nowrap px-2 text-lg'>
               <NavLink to={'/'}>
                 <div>LOGO Wander Vilnius</div>
               </NavLink>
             </div>
-            <div className='hidden flex-none sm:block'>
+            <div className='hidden flex-none sm:block text-lg border'>
               <ul className='menu menu-horizontal'>
                 {/* Navbar menu content here */}
-                <div className='flex gap-2 text-lg'>
+                <div className='flex gap-2 text-lg items-center'>
                   <NavLink to={'/tours'}>
                     <li>Tours</li>
                   </NavLink>
@@ -91,21 +91,20 @@ function Layout() {
                       <NavLink to={'/signup'}>
                         <li>Signup</li>
                       </NavLink>
-                      <li
-                        className='login'
-                        onClick={() => setShowLogin((p) => !p)}
-                      >
-                        Login
-                      </li>
+                      {shouldShowLogin && (
+                        <li onClick={() => setShowLogin((p) => !p)}>Login</li>
+                      )}
                     </>
                   )}
                 </div>
+                <li>
+                  <ThemeController />
+                </li>
               </ul>
             </div>
           </div>
           {/* Page content here */}
           {/* NAVBAR / SIDEBAR CONTENT */}
-
           {showLogin && (
             <div className='relative '>
               <LoginForm
@@ -125,16 +124,24 @@ function Layout() {
             {/* Sidebar content here */}
             <div className='border '>
               <NavLink to={'/tours'} onClick={closeSidebar}>
-                <li>Tours</li>
+                <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                  Tours
+                </li>
               </NavLink>
               <NavLink to={'/news'} onClick={closeSidebar}>
-                <li>News</li>
+                <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                  News
+                </li>
               </NavLink>
               <NavLink to={'/about'} onClick={closeSidebar}>
-                <li>About</li>
+                <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                  About
+                </li>
               </NavLink>
               <NavLink to={'/reviews'} onClick={closeSidebar}>
-                <li>Reviews</li>
+                <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                  Reviews
+                </li>
               </NavLink>
             </div>
             <button
@@ -156,22 +163,33 @@ function Layout() {
                 ></path>
               </svg>
             </button>
-            <div>
-              {/* <NavLink to={'/profile'} onClick={closeSidebar}>
-                <li>Profile page + picture</li>
-              </NavLink> */}
-              {token ? (
-                <NavLink to={'/profile'}>
-                  <li>Profile page + picture</li>
-                </NavLink>
-              ) : (
-                <>
-                  <li onClick={closeSidebar}>Login</li>
-                  <NavLink to={'/signup'} onClick={closeSidebar}>
-                    <li>Signup</li>
+            <div className='border flex justify-between items-center '>
+              <div>
+                {token ? (
+                  <NavLink to={'/profile'}>
+                    <li>Profile page + picture</li>
                   </NavLink>
-                </>
-              )}
+                ) : (
+                  <>
+                    <NavLink to={'/login'}>
+                      <li
+                        onClick={closeSidebar}
+                        className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'
+                      >
+                        Login
+                      </li>
+                    </NavLink>
+                    <NavLink to={'/signup'} onClick={closeSidebar}>
+                      <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                        Signup
+                      </li>
+                    </NavLink>
+                  </>
+                )}
+              </div>
+              <li>
+                <ThemeController />
+              </li>
             </div>
           </ul>
         </div>
