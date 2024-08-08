@@ -1,11 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
-
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import LoginForm from './components/LoginForm';
 import ThemeController from './components/ThemeController';
 
 function Layout() {
   const token = window.localStorage.getItem('token');
+  let decoded;
+  if (token) {
+    decoded = jwtDecode(token);
+  }
+  const navigate = useNavigate();
 
   const [showLogin, setShowLogin] = useState(false);
   const location = useLocation();
@@ -30,6 +35,10 @@ function Layout() {
 
   const closeSidebar = () => {
     document.getElementById('my-drawer-3').checked = false;
+  };
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/about');
   };
   return (
     <>
@@ -84,7 +93,13 @@ function Layout() {
 
                   {token ? (
                     <NavLink to={'/profile'}>
-                      <li>Profile</li>
+                      <li>
+                        {decoded && (
+                          <>
+                            {decoded.name} {decoded.lastname}
+                          </>
+                        )}
+                      </li>
                     </NavLink>
                   ) : (
                     <>
@@ -114,7 +129,7 @@ function Layout() {
             </div>
           )}
         </div>
-        <div className='drawer-side'>
+        <div className='drawer-side z-20'>
           <label
             htmlFor='my-drawer-3'
             aria-label='close sidebar'
@@ -166,9 +181,19 @@ function Layout() {
             <div className='border flex justify-between items-center '>
               <div>
                 {token ? (
-                  <NavLink to={'/profile'}>
-                    <li>Profile page + picture</li>
-                  </NavLink>
+                  <>
+                    <NavLink to={'/profile'}>
+                      <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                        {decoded.name} {decoded.lastname}
+                      </li>
+                    </NavLink>
+                    <li
+                      className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'
+                      onClick={logout}
+                    >
+                      Logout
+                    </li>
+                  </>
                 ) : (
                   <>
                     <NavLink to={'/login'}>

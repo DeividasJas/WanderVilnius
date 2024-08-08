@@ -3,21 +3,20 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 import { ThemeProvider } from './context/ThemeContext.jsx';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useParams,
-} from 'react-router-dom';
+import { getGroupTours, getSoloTours } from './services/get.mjs';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout.jsx';
 import ErrorPage from './Error-page.jsx';
 import Home from './components/Home.jsx';
-import ProfilePage from './pages/ProfilePage.jsx';
-import ToursPage from './pages/ToursPage.jsx';
+import ProfilePage from './pages/profile_page/ProfilePage.jsx';
+import ToursPage from './pages/tours_page/ToursPage.jsx';
 import About from './pages/About.jsx';
 import NewsPage from './pages/NewsPage.jsx';
 import ReviewPage from './pages/ReviewPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
+import GroupTours from './pages/tours_page/GroupTours.jsx';
+import SoloTours from './pages/tours_page/SoloTours.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <LoginPage/>,
+        element: <LoginPage />,
         errorElement: <ErrorPage />,
       },
       {
@@ -44,6 +43,11 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
+            element: <ProfilePage />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: '/profile/tour',
             element: <ProfilePage />,
             errorElement: <ErrorPage />,
           },
@@ -56,6 +60,18 @@ const router = createBrowserRouter([
             index: true,
             element: <ToursPage />,
             errorElement: <ErrorPage />,
+          },
+          {
+            path: '/tours/group',
+            element: <GroupTours />,
+            errorElement: <ErrorPage />,
+            loader: getGroupTours,
+          },
+          {
+            path: '/tours/solo',
+            element: <SoloTours />,
+            errorElement: <ErrorPage />,
+            loader: getSoloTours,
           },
         ],
       },

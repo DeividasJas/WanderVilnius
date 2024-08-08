@@ -1,10 +1,13 @@
 import { useForm } from 'react-hook-form';
+import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTheme } from '../context/ThemeContext';
+import { signupUser } from '../services/post.mjs';
+import { useNavigate } from 'react-router-dom';
 function SignupPage() {
   const { isDarkMode } = useTheme();
-  console.log(isDarkMode);
+  const navigate = useNavigate()
   const phoneRegex = new RegExp(
     '^\\+?(?:\\d{1,3})?[-.\\s]?(?:\\(?\\d{1,4}\\)?[-.\\s]?)?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$'
   );
@@ -32,7 +35,6 @@ function SignupPage() {
     // mode: 'onTouched',
     resolver: yupResolver(formSchema),
   });
-  console.log(errors);
   const showInput = (input) => {
     const x = document.getElementById(input);
 
@@ -43,8 +45,23 @@ function SignupPage() {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (formData) => {
+    console.log(formData);
+    try {
+      const { status, data } = await signupUser(formData);
+      // console.log(newUser);
+      console.log(status);
+      console.log(data);
+      if (status === 409) {
+        toast.error(data.message);
+      } else {
+        window.localStorage.setItem('token', data);
+        toast.success('Registration completed successfully');
+        setTimeout(() => {
+          navigate('/about');
+        }, 1000);
+      }
+    } catch (error) {}
   };
   return (
     <div>
@@ -146,8 +163,11 @@ function SignupPage() {
             {errors.repeat_password?.message}
           </p>
         </div>
-        <button type='submit' className="btn btn-neutral">Register</button>
+        <button type='submit' className='btn btn-neutral'>
+          Register
+        </button>
       </form>
+      <Toaster richColors />
     </div>
   );
 }

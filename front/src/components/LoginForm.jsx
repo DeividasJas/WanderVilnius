@@ -1,13 +1,15 @@
-import { forwardRef } from 'react';
-
 import { useForm } from 'react-hook-form';
+import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { loginUser } from '../services/post.mjs';
+import { forwardRef } from 'react';
 
 const LoginForm = forwardRef((props, ref) => {
   const { isDarkMode } = useTheme();
-
+  const navigate = useNavigate();
   const formSchema = yup.object().shape({
     email: yup
       .string()
@@ -34,8 +36,19 @@ const LoginForm = forwardRef((props, ref) => {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (formData) => {
+    console.log(formData);
+    const { status, data } = await loginUser(formData);
+    console.log(status, data);
+    if (status === 400) {
+      toast.error(data.message);
+    } else {
+      window.localStorage.setItem('token', data);
+      setTimeout(() => {
+        toast.success('Welcome');
+        navigate('/about');
+      }, 700);
+    }
   };
   return (
     <div ref={ref} className={props.className}>
@@ -43,7 +56,7 @@ const LoginForm = forwardRef((props, ref) => {
       <form
         noValidate
         onSubmit={handleSubmit(onSubmit)}
-        className='flex flex-col gap-2 '
+        className='flex flex-col justify-center items-center gap-5'
       >
         <div className='relative min-w-36 w-48 lg:w-56'>
           <input
@@ -77,8 +90,11 @@ const LoginForm = forwardRef((props, ref) => {
           />
           <p className='text-red-800 w-full'>{errors.password?.message}</p>
         </div>
-        <button type='submit'>Login</button>
+        <button type='submit' className='btn btn-active btn-neutral'>
+          Login
+        </button>
       </form>
+      <Toaster />
     </div>
   );
 });
