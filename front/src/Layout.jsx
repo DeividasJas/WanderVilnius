@@ -3,6 +3,8 @@ import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import LoginForm from './components/LoginForm';
 import ThemeController from './components/ThemeController';
+import { useTheme } from './context/ThemeContext';
+import ToursDropdown from './components/ToursDropdown';
 
 function Layout() {
   const token = window.localStorage.getItem('token');
@@ -11,7 +13,7 @@ function Layout() {
     decoded = jwtDecode(token);
   }
   const navigate = useNavigate();
-
+  const { isDarkMode } = useTheme();
   const [showLogin, setShowLogin] = useState(false);
   const location = useLocation();
   const shouldShowLogin = location.pathname !== '/login';
@@ -74,40 +76,92 @@ function Layout() {
                 <div>LOGO Wander Vilnius</div>
               </NavLink>
             </div>
-            <div className='hidden flex-none sm:block text-lg border'>
-              <ul className='menu menu-horizontal'>
+            <div className='hidden flex-none sm:block text-lg '>
+              <ul className='menu menu-horizontal p-0'>
                 {/* Navbar menu content here */}
-                <div className='flex gap-2 text-lg items-center'>
-                  <NavLink to={'/tours'}>
-                    <li>Tours</li>
-                  </NavLink>
+                <div className='flex text-lg items-center'>
+                  <ToursDropdown />
+
                   <NavLink to={'/news'}>
-                    <li>News</li>
+                    <li
+                      className={`w-fit ${
+                        isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
+                      } rounded-lg px-3 py-1`}
+                    >
+                      News
+                    </li>
                   </NavLink>
                   <NavLink to={'/about'}>
-                    <li>About</li>
+                    <li
+                      className={`w-fit ${
+                        isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
+                      } rounded-lg px-3 py-1`}
+                    >
+                      About
+                    </li>
                   </NavLink>
                   <NavLink to={'/reviews'}>
-                    <li>Reviews</li>
+                    <li
+                      className={`w-fit ${
+                        isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
+                      } rounded-lg px-3 py-1`}
+                    >
+                      Reviews
+                    </li>
                   </NavLink>
 
                   {token ? (
-                    <NavLink to={'/profile'}>
-                      <li>
-                        {decoded && (
-                          <>
-                            {decoded.name} {decoded.lastname}
-                          </>
-                        )}
+                    <>
+                      <NavLink to={'/profile'}>
+                        <li
+                          className={`w-fit ${
+                            isDarkMode
+                              ? 'hover:bg-slate-600'
+                              : 'hover:bg-slate-300'
+                          } rounded-lg px-3 py-1`}
+                        >
+                          {decoded && (
+                            <>
+                              {decoded.name} {decoded.lastname}
+                            </>
+                          )}
+                        </li>
+                      </NavLink>
+                      <li
+                        className={`w-fit ${
+                          isDarkMode
+                            ? 'hover:bg-slate-600'
+                            : 'hover:bg-slate-300'
+                        } rounded-lg px-3 py-1`}
+                        onClick={logout}
+                      >
+                        Logout
                       </li>
-                    </NavLink>
+                    </>
                   ) : (
                     <>
                       <NavLink to={'/signup'}>
-                        <li>Signup</li>
+                        <li
+                          className={`w-fit ${
+                            isDarkMode
+                              ? 'hover:bg-slate-600'
+                              : 'hover:bg-slate-300'
+                          } rounded-lg px-3 py-1`}
+                        >
+                          Signup
+                        </li>
                       </NavLink>
                       {shouldShowLogin && (
-                        <li onClick={() => setShowLogin((p) => !p)}>Login</li>
+                        <li
+                          className={`w-fit ${
+                            isDarkMode
+                              ? 'hover:bg-slate-600'
+                              : 'hover:bg-slate-300'
+                          } rounded-lg px-3 py-1`}
+                          onClick={() => setShowLogin((p) => !p)}
+                        >
+                          Login
+                        </li>
                       )}
                     </>
                   )}
@@ -124,7 +178,10 @@ function Layout() {
             <div className='relative '>
               <LoginForm
                 ref={loginRef}
-                className='border border-red-900 rounded-lg p-2 absolute z-10 top-3 right-3 w-2/3 max-w-md bg-white shadow-lg'
+                className={`border border-slate-900 rounded-lg p-2 absolute z-10 top-3 right-3 w-2/3 max-w-md shadow-lg ${
+                  isDarkMode ? 'bg-slate-700' : 'bg-slate-100'
+                }`}
+                setShowLogin={setShowLogin}
               />
             </div>
           )}
@@ -139,22 +196,38 @@ function Layout() {
             {/* Sidebar content here */}
             <div className='border '>
               <NavLink to={'/tours'} onClick={closeSidebar}>
-                <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                <li
+                  className={`w-fit ${
+                    isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
+                  } rounded-lg px-3 py-1`}
+                >
                   Tours
                 </li>
               </NavLink>
               <NavLink to={'/news'} onClick={closeSidebar}>
-                <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                <li
+                  className={`w-fit ${
+                    isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
+                  } rounded-lg px-3 py-1`}
+                >
                   News
                 </li>
               </NavLink>
               <NavLink to={'/about'} onClick={closeSidebar}>
-                <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                <li
+                  className={`w-fit ${
+                    isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
+                  } rounded-lg px-3 py-1`}
+                >
                   About
                 </li>
               </NavLink>
               <NavLink to={'/reviews'} onClick={closeSidebar}>
-                <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                <li
+                  className={`w-fit ${
+                    isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
+                  } rounded-lg px-3 py-1`}
+                >
                   Reviews
                 </li>
               </NavLink>
@@ -183,12 +256,20 @@ function Layout() {
                 {token ? (
                   <>
                     <NavLink to={'/profile'}>
-                      <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                      <li
+                        className={`w-fit ${
+                          isDarkMode
+                            ? 'hover:bg-slate-600'
+                            : 'hover:bg-slate-300'
+                        } rounded-lg px-3 py-1`}
+                      >
                         {decoded.name} {decoded.lastname}
                       </li>
                     </NavLink>
                     <li
-                      className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'
+                      className={`w-fit ${
+                        isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
+                      } rounded-lg px-3 py-1`}
                       onClick={logout}
                     >
                       Logout
@@ -199,13 +280,23 @@ function Layout() {
                     <NavLink to={'/login'}>
                       <li
                         onClick={closeSidebar}
-                        className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'
+                        className={`w-fit ${
+                          isDarkMode
+                            ? 'hover:bg-slate-600'
+                            : 'hover:bg-slate-300'
+                        } rounded-lg px-3 py-1`}
                       >
                         Login
                       </li>
                     </NavLink>
                     <NavLink to={'/signup'} onClick={closeSidebar}>
-                      <li className='w-fit hover:bg-slate-300 rounded-lg px-3 py-1'>
+                      <li
+                        className={`w-fit ${
+                          isDarkMode
+                            ? 'hover:bg-slate-600'
+                            : 'hover:bg-slate-300'
+                        } rounded-lg px-3 py-1`}
+                      >
                         Signup
                       </li>
                     </NavLink>

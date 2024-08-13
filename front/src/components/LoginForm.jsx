@@ -47,12 +47,12 @@ const LoginForm = forwardRef((props, ref) => {
       setTimeout(() => {
         toast.success('Welcome');
         navigate('/about');
+        props.setShowLogin(false)
       }, 700);
     }
   };
   return (
     <div ref={ref} className={props.className}>
-      <h1>this is login form</h1>
       <form
         noValidate
         onSubmit={handleSubmit(onSubmit)}
@@ -63,8 +63,8 @@ const LoginForm = forwardRef((props, ref) => {
             type='email'
             placeholder='Email Address'
             id='email'
-            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
-              isDarkMode && 'text-slate-400'
+            className={`w-full  py-1 pl-2 rounded-md ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('email')}
           />
@@ -76,8 +76,8 @@ const LoginForm = forwardRef((props, ref) => {
             type='password'
             placeholder='Password'
             id='password'
-            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
-              isDarkMode && 'text-slate-400'
+            className={`w-full  py-1 pl-2 rounded-md ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('password')}
           />

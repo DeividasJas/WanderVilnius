@@ -1,5 +1,10 @@
+import ToursDropdown from '../../components/ToursDropdown';
+import { useState } from 'react';
 function ToursPage() {
-    return ( <><h1>ToursPage</h1></> );
+  const [openProfile, setOpenProfile] = useState(true);
+  return <>
+  {openProfile && <ToursDropdown />}
+  </>;
 }
 
 export default ToursPage;

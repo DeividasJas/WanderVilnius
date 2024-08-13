@@ -76,8 +76,8 @@ function SignupPage() {
             type='text'
             placeholder='Firstname'
             id='name'
-            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
-              isDarkMode && 'text-slate-400'
+            className={`w-full  py-1 pl-2 rounded-md ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('name')}
           />
@@ -89,8 +89,8 @@ function SignupPage() {
             type='text'
             placeholder='Lastname'
             id='lastname'
-            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
-              isDarkMode && 'text-slate-400'
+            className={`w-full  py-1 pl-2 rounded-md ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('lastname')}
           />
@@ -102,8 +102,8 @@ function SignupPage() {
             type='tel'
             placeholder='Phone Number'
             id='phone_number'
-            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
-              isDarkMode && 'text-slate-400'
+            className={`w-full  py-1 pl-2 rounded-md ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('phone_number')}
           />
@@ -114,8 +114,8 @@ function SignupPage() {
             type='email'
             placeholder='Email Address'
             id='email'
-            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
-              isDarkMode && 'text-slate-400'
+            className={`w-full  py-1 pl-2 rounded-md ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('email')}
           />
@@ -127,8 +127,8 @@ function SignupPage() {
             type='password'
             placeholder='Password'
             id='password'
-            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
-              isDarkMode && 'text-slate-400'
+            className={`w-full  py-1 pl-2 rounded-md ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('password')}
           />
@@ -147,8 +147,8 @@ function SignupPage() {
             type='password'
             placeholder='Repeat Password'
             id='repeat_password'
-            className={`w-full text-slate-800 py-1 pl-2 rounded-md ${
-              isDarkMode && 'text-slate-400'
+            className={`w-full  py-1 pl-2 rounded-md ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('repeat_password')}
           />

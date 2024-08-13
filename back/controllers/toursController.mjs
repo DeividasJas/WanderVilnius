@@ -6,10 +6,12 @@ import {
   pg_getTourById,
   pg_postTour,
   pg_registerNewTourTime,
+  pg_searchTour,
 } from '../models/toursModel.mjs';
 
 export const postTour = async (req, res) => {
   try {
+    console.log('hello');
     let {
       name,
       description,
@@ -18,6 +20,7 @@ export const postTour = async (req, res) => {
       maximum_participants,
       //   registered_participants
     } = req.body;
+    console.log(name, description, is_group, location, maximum_participants);
 
     if (!is_group) {
       maximum_participants = 1;
@@ -37,7 +40,7 @@ export const postTour = async (req, res) => {
       description,
       is_group,
       location,
-      maximum_participants
+      parseInt(maximum_participants)
     );
 
     if (typeof newTour.id !== 'number') {
@@ -112,7 +115,7 @@ export const deleteTourById = async (req, res) => {
 export const registerNewTourTime = async (req, res) => {
   try {
     const { tour_id, tour_date_time } = req.body;
-    const date = Date(tour_date_time)
+    const date = Date(tour_date_time);
     const newTourTime = await pg_registerNewTourTime(tour_id, date);
     // all times are given in UTC 0,
     // thus you will have to add / remove extra hours depending on you time zone
@@ -129,6 +132,27 @@ export const deleteTourTime = async (req, res) => {
     const deletedTime = await pg_deleteTourTime(id);
     console.log(deletedTime);
     return res.status(200).json({ message: 'Successfully deleted' });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: error });
+  }
+};
+
+export const searchTour = async (req, res) => {
+  try {
+
+    let { tourType } = req.params;
+    if (tourType === 'solo') {
+      tourType = false;
+    } else if (tourType === 'group') {
+      tourType = true;
+    } else {
+      return res.status(404).json({ message: 'Bad request' });
+    }
+
+    const results = await pg_searchTour(req.query, tourType);
+    console.log(results);
+    return res.status(200).json(results);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error });

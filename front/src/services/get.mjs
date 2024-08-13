@@ -26,3 +26,29 @@ export const getSoloTours = async () => {
     return error.response;
   }
 };
+
+export const getTours = async (tourType) => {
+  try {
+    const response = await axios.get(`${tour_url}/${tourType}`, config)
+    return response
+  } catch (error) {
+    console.error(error);
+    return error.response;
+  }
+}
+
+export const searchTours = async (queryString, tourType) => {
+  try {
+    // console.log(tourType);
+    console.log(`${tour_url}/search/${tourType}?${queryString}`);
+    const response = await axios.get(
+      `${tour_url}/search/${tourType}?${queryString}`,
+      config
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error(error);
+    return error.response;
+  }
+};

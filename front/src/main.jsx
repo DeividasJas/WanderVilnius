@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 import { ThemeProvider } from './context/ThemeContext.jsx';
-import { getGroupTours, getSoloTours } from './services/get.mjs';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { getGroupTours, getSoloTours, getTours } from './services/get.mjs';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useParams,
+} from 'react-router-dom';
 import Layout from './Layout.jsx';
 import ErrorPage from './Error-page.jsx';
 import Home from './components/Home.jsx';
@@ -62,17 +66,23 @@ const router = createBrowserRouter([
             errorElement: <ErrorPage />,
           },
           {
-            path: '/tours/group',
-            element: <GroupTours />,
-            errorElement: <ErrorPage />,
-            loader: getGroupTours,
-          },
-          {
-            path: '/tours/solo',
+            path: '/tours/:tourType',
             element: <SoloTours />,
             errorElement: <ErrorPage />,
-            loader: getSoloTours,
+            loader: async ({ params }) => {
+              const { tourType } = params;
+              console.log(tourType);
+              const tours = await getTours(tourType);
+              return tours;
+            },
+            // loader: getSoloTours,
           },
+          // {
+          //   path: '/tours/:tourType',
+          //   element: <GroupTours />,
+          //   errorElement: <ErrorPage />,
+          //   loader: getGroupTours,
+          // },
         ],
       },
       {
