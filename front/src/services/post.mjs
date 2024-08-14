@@ -34,7 +34,17 @@ export const createTour = async (formData) => {
     // console.log(formData);
     const response = await axios.post(tour_url, formData, config);
     console.log(response);
-    return response
+    return response;
+  } catch (error) {
+    console.error(error);
+    return error.response;
+  }
+};
+
+export const registerTourTime = async (formData) => {
+  try {
+    const response = await axios.post(`${tour_url}/time`, formData, config);
+    return response;
   } catch (error) {
     console.error(error);
     return error.response;

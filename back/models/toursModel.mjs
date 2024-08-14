@@ -6,12 +6,12 @@ export const pg_postTour = async (
   is_group,
   location,
   maximum_participants,
-  registered_participants
+  image_url
 ) => {
   try {
     const newTour = await sql`
-    INSERT INTO tours (name, description, is_group, location, maximum_participants)
-    VALUES (${name}, ${description}, ${is_group}, ${location}, ${maximum_participants})
+    INSERT INTO tours (name, description, is_group, location, maximum_participants, image_url)
+    VALUES (${name}, ${description}, ${is_group}, ${location}, ${maximum_participants}, ${image_url})
     RETURNING *
     `;
     return newTour[0];
@@ -19,6 +19,12 @@ export const pg_postTour = async (
     console.log(error);
     throw error;
   }
+};
+
+export const pg_getAllTours = async () => {
+  const allTours = await sql`
+  SELECT * FROM tours`;
+  return allTours;
 };
 
 export const pg_getGroupTours = async () => {
@@ -37,8 +43,20 @@ export const pg_getSoloTours = async () => {
 
 export const pg_getTourById = async (id) => {
   const tour = await sql`
-  SELECT * FROM tours
-  WHERE id = ${id}`;
+  SELECT 
+  tours.id AS tour_id,
+  tours.name AS name,
+  tours.description AS description,
+  tours.is_group AS is_group,
+  tours.location AS location,
+  tours.maximum_participants AS maximum_participants,
+  tours.image_url AS image_url,
+  ARRAY_AGG(tour_times.tour_date_time  ORDER BY tours.id) AS dates
+  FROM tours
+  INNER JOIN tour_times ON tour_times.tour_id = tours.id
+  WHERE tours.id = ${id}
+  GROUP BY tours.id, tours.name, tours.description, tours.is_group, tours.location, tours.maximum_participants, tours.image_url
+  `;
   return tour[0];
 };
 
@@ -68,11 +86,9 @@ export const pg_deleteTourTime = async (id) => {
   return deletedTime;
 };
 
-export const pg_searchTour = async ( reqQuery, is_group) => {
+export const pg_searchTour = async (reqQuery, is_group) => {
   let { search, sort, page, limit, order } = reqQuery;
   console.log(reqQuery);
-
-
 
   console.log('cuisines.name');
   page = parseInt(page);
@@ -90,7 +106,8 @@ export const pg_searchTour = async ( reqQuery, is_group) => {
     tours.description AS description,
     tours.location AS location,
     tours.maximum_participants AS maximum_participants,
-    tours.is_group AS isGROUP
+    tours.is_group AS isGROUP,
+    tours.image_url AS image_url
   FROM tours
   WHERE tours.is_group = ${is_group}
     ${
@@ -104,7 +121,7 @@ export const pg_searchTour = async ( reqQuery, is_group) => {
     LIMIT ${limit}
     OFFSET ${offset};
     `;
-    return results;
-  };
-  
-  // GROUP BY tours.id, tours.name, tours.description, tours.location
+  return results;
+};
+
+// GROUP BY tours.id, tours.name, tours.description, tours.location

@@ -27,7 +27,7 @@ function SoloTours() {
   if (order) queryParams.append('order', order);
 
   let queryString = queryParams.toString();
-  console.log(queryString);
+  // console.log(queryString);
 
   // console.log(soloTourData.data.length);
   useEffect(() => {
@@ -39,7 +39,7 @@ function SoloTours() {
         }
       })();
     } catch (error) {}
-  }, [page, limit, search, sort, order]);
+  }, [page, limit, search, sort, order, tourType]);
   return (
     <>
       <h2 className='text-3xl text-center capitalize'>{tourType} tours</h2>

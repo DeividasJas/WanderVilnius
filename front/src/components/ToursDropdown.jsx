@@ -33,9 +33,9 @@ function ToursDropdown() {
       ref={dropdownRef}
     >
       Tours
-      <div className={`dropdown-menu ${isOpen ? 'active' : ''}`}>
+      <div className={`dropdown-menu flex flex-col items-start ${isOpen ? 'active' : ''}`}>
         <Link to={'/tours/group'}>Group</Link>
-        <Link to={'/tours/solo'}>Individual</Link>
+        <Link to={'/tours/individual'}>Individual</Link>
       </div>
     </li>
   );

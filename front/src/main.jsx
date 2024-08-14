@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 import { ThemeProvider } from './context/ThemeContext.jsx';
-import { getGroupTours, getSoloTours, getTours } from './services/get.mjs';
+import { getAllTours, getGroupTours, getSoloTours, getTourById, getTours } from './services/get.mjs';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,13 +13,12 @@ import Layout from './Layout.jsx';
 import ErrorPage from './Error-page.jsx';
 import Home from './components/Home.jsx';
 import ProfilePage from './pages/profile_page/ProfilePage.jsx';
-import ToursPage from './pages/tours_page/ToursPage.jsx';
+import ToursPage from './pages/tours_page/TourPage.jsx';
 import About from './pages/About.jsx';
 import NewsPage from './pages/NewsPage.jsx';
 import ReviewPage from './pages/ReviewPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import GroupTours from './pages/tours_page/GroupTours.jsx';
 import SoloTours from './pages/tours_page/SoloTours.jsx';
 
 const router = createBrowserRouter([
@@ -71,19 +70,20 @@ const router = createBrowserRouter([
             errorElement: <ErrorPage />,
             loader: async ({ params }) => {
               const { tourType } = params;
-              console.log(tourType);
               const tours = await getTours(tourType);
               return tours;
             },
-            // loader: getSoloTours,
           },
-          // {
-          //   path: '/tours/:tourType',
-          //   element: <GroupTours />,
-          //   errorElement: <ErrorPage />,
-          //   loader: getGroupTours,
-          // },
-        ],
+          {
+            path: '/tours/:tourType/:tourId',
+            element: <ToursPage/>,
+            errorElement: <ErrorPage/>,
+            loader: async ({params}) => {
+              const { tourId} = params
+              return await getTourById(tourId)
+            }
+          }
+        ]
       },
       {
         path: '/news',

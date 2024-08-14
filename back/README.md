@@ -20,22 +20,25 @@ CREATE TABLE guides (
     age INT
 );
 
--- Create the `tours` table with participant constraints
+-- Create the `tours` table
 CREATE TABLE tours (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    is_group BOOLEAN,
-    location VARCHAR(255),
-    maximum_participants INT NOT NULL,
-    registered_participants INT DEFAULT 0 CHECK (registered_participants <= maximum_participants)
+    id SERIAL PRIMARY KEY, -- Auto-incremented primary key
+    name VARCHAR(255) NOT NULL, -- Name of the tour
+    description TEXT, -- Description of the tour
+    is_group BOOLEAN, -- Indicates if the tour is for a group (true/false)
+    location VARCHAR(255), -- Location of the tour
+    maximum_participants INT NOT NULL, -- Maximum number of participants allowed
+    image_url VARCHAR(255), -- URL to the tour image
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, -- Timestamp when the tour was created
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP -- Timestamp when the tour was last updated
 );
 
 -- Create the `tour_times` table
 CREATE TABLE tour_times (
-    id SERIAL PRIMARY KEY,
-    tour_id INT REFERENCES tours(id),
-    tour_date_time TIMESTAMP WITH TIME ZONE
+    id SERIAL PRIMARY KEY, -- Auto-incremented primary key
+    tour_id INT REFERENCES tours(id) ON DELETE CASCADE, -- Foreign key referencing the `tours` table
+    tour_date_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, -- Date and time of the tour
+    registered_participants INT DEFAULT 0 -- Number of participants currently registered
 );
 
 -- Create the `tour_guides` table

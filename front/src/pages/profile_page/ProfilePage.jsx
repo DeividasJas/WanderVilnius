@@ -1,5 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import TourForm from "../../components/TourForm";
+import TourTime from "../../components/TourTime";
+
 function ProfilePage() {
   const token = jwtDecode(window.localStorage.getItem('token'))
     console.log(token);
@@ -10,8 +12,11 @@ function ProfilePage() {
             <li>Profile</li>
             <li>My registrations</li>
             {token.role === 'admin' && <li>Add tour</li>}
+            {token.role === 'admin' && <li>Add tour time</li>}
         </ul>
         <TourForm/>
+
+        <TourTime/>
     </div>
   );
 }

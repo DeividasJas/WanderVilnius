@@ -31,6 +31,7 @@ function TourForm() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     // mode: 'onTouched',
@@ -42,7 +43,7 @@ function TourForm() {
     const isGroup = formData.is_group === 'true'; // 'true' becomes true, 'false' becomes false
     console.log(isGroup);
     formData.is_group = isGroup;
-    formData.maximum_participants = parseInt(formData.maximum_participants)
+    formData.maximum_participants = parseInt(formData.maximum_participants);
     if (!isGroup) {
       formData.maximum_participants = 1;
     }
@@ -51,13 +52,10 @@ function TourForm() {
     console.log(status, data);
     if (status === 400) {
       toast.error(data.message);
+    } else {
+      toast.success('Tour created');
+      reset()
     }
-    // else {
-    //   setTimeout(() => {
-    //     toast.success('Welcome');
-    //     navigate('/about');
-    //   }, 700);
-    // }
   };
 
   return (
@@ -91,6 +89,18 @@ function TourForm() {
             {...register('location')}
           />
           <p className='text-red-800 w-full'>{errors.location?.message}</p>
+        </div>
+        <div className='relative w-64  '>
+          <input
+            type='text'
+            placeholder='Image URL'
+            id='text'
+            className={`w-full  py-1 pl-2 rounded-md  ${
+              isDarkMode ? 'text-slate-200' : 'text-slate-800'
+            }`}
+            {...register('image_url')}
+          />
+          <p className='text-red-800 w-full'>{errors.image_url?.message}</p>
         </div>
 
         <div className={`relative w-64 ${!isGroup && 'sm:col-span-2'}`}>

@@ -37,15 +37,34 @@ export const getTours = async (tourType) => {
   }
 }
 
+export const getAllTours = async () => {
+  try {
+    const response = await axios.get(tour_url, config)
+    return response
+  } catch (error) {
+    console.error(error);
+    return error.response;
+  }
+}
+
+export const getTourById = async (tourId) => {
+  try {
+    console.log(`${tour_url}/${tourId}`);
+    const response = await axios.get(`${tour_url}/${tourId}`)
+    return response
+  } catch (error) {
+    console.error(error);
+    return error.response;
+  }
+}
+
 export const searchTours = async (queryString, tourType) => {
   try {
-    // console.log(tourType);
-    console.log(`${tour_url}/search/${tourType}?${queryString}`);
+    // console.log(`${tour_url}/search/${tourType}?${queryString}`);
     const response = await axios.get(
       `${tour_url}/search/${tourType}?${queryString}`,
       config
     );
-    console.log(response);
     return response;
   } catch (error) {
     console.error(error);
