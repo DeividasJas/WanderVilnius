@@ -6,6 +6,9 @@
   .inputClass {
     @apply w-full  py-1 pl-2 rounded-md;
   }
+  .inputDiv {
+    @apply relative min-w-36 w-48 lg:w-56
+  }
   .errorPara {
     @apply text-red-800 w-full
   }

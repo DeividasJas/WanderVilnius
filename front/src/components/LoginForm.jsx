@@ -58,7 +58,7 @@ const LoginForm = forwardRef((props, ref) => {
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col justify-center items-center gap-5'
       >
-        <div className='relative min-w-36 w-48 lg:w-56'>
+        <div className='inputDiv'>
           <input
             type='email'
             placeholder='Email Address'
@@ -71,7 +71,7 @@ const LoginForm = forwardRef((props, ref) => {
           <p className='errorPara'>{errors.email?.message}</p>
         </div>
 
-        <div className='relative min-w-36 w-48 lg:w-56'>
+        <div className='inputDiv'>
           <input
             type='password'
             placeholder='Password'

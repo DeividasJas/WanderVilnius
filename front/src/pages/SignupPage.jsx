@@ -65,10 +65,10 @@ function SignupPage() {
   };
   return (
     <div>
-      <h1 className='text-center text-2xl my-8'>Register Here</h1>
+      <h1 className=''>Register Here</h1>
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-wrap gap-3 justify-center max-w-lg border mx-auto'>
-          <div className='relative min-w-36 w-48 lg:w-56'>
+          <div className='inputDiv'>
             <input
               type='text'
               placeholder='Firstname'
@@ -81,7 +81,7 @@ function SignupPage() {
             <p className='text-red-800'>{errors.name?.message}</p>
           </div>
 
-          <div className='relative min-w-36 w-48 lg:w-56'>
+          <div className='inputDiv'>
             <input
               type='text'
               placeholder='Lastname'
@@ -94,7 +94,7 @@ function SignupPage() {
             <p className='text-red-800'>{errors.lastname?.message}</p>
           </div>
 
-          <div className='relative min-w-36 w-48 lg:w-56'>
+          <div className='inputDiv'>
             <input
               type='tel'
               placeholder='Phone Number'
@@ -106,7 +106,7 @@ function SignupPage() {
             />
             <p className='text-red-800'>{errors.phone_number?.message}</p>
           </div>
-          <div className='relative min-w-36 w-48 lg:w-56'>
+          <div className='inputDiv'>
             <input
               type='email'
               placeholder='Email Address'
@@ -119,7 +119,7 @@ function SignupPage() {
             <p className='text-red-800'>{errors.email?.message}</p>
           </div>
 
-          <div className='relative min-w-36 w-48 lg:w-56'>
+          <div className='inputDiv'>
             <input
               type='password'
               placeholder='Password'
@@ -139,7 +139,7 @@ function SignupPage() {
             <p className='text-red-800'>{errors.password?.message}</p>
           </div>
 
-          <div className='relative min-w-36 w-48 lg:w-56'>
+          <div className='inputDiv'>
             <input
               type='password'
               placeholder='Repeat Password'
