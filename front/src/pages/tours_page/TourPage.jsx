@@ -1,10 +1,12 @@
-import { useLoaderData, useParams } from 'react-router-dom';
+import { useLoaderData, useParams, Outlet } from 'react-router-dom';
 import Calendar from '../../components/Calendar';
 import { useState } from 'react';
 function ToursPage() {
   const tourData = useLoaderData();
   const { tourType, tourId } = useParams();
   console.log(tourData);
+
+  const [showRegistration, setShowRegistration] = useState(false);
 
   if (tourData.status > 200) {
     return <h1>Something went wrong</h1>;
@@ -16,7 +18,7 @@ function ToursPage() {
         </h1>
         <div className='flex flex-col gap-4 sm:flex-row mx-auto max-w-3xl px-4'>
           <img
-            className='aspect-square w-72 mx-auto rounded-sm shadow-md object-cover'
+            className='aspect-square h-72 w-72 rounded-sm shadow-md object-cover'
             src={
               tourData.data.image_url
                 ? tourData.data.image_url
@@ -43,8 +45,15 @@ function ToursPage() {
             </div>
           </div>
         </div>
+        {showRegistration && <Outlet />}
         <div className=''>
-          <Calendar eventData={tourData.data} />
+          {tourData.data.dates ? (
+            <Calendar eventData={tourData.data} setShowRegistration={setShowRegistration} />
+          ) : (
+            <p className='text-center mt-10 italic text-2xl font-bold'>
+              No scheduled dates
+            </p>
+          )}
         </div>
       </>
     );

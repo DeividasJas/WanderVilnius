@@ -7,7 +7,7 @@ import { signupUser } from '../services/post.mjs';
 import { useNavigate } from 'react-router-dom';
 function SignupPage() {
   const { isDarkMode } = useTheme();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const phoneRegex = new RegExp(
     '^\\+?(?:\\d{1,3})?[-.\\s]?(?:\\(?\\d{1,4}\\)?[-.\\s]?)?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$'
   );
@@ -65,107 +65,105 @@ function SignupPage() {
   };
   return (
     <div>
-      <h1>signup bro</h1>
-      <form
-        noValidate
-        onSubmit={handleSubmit(onSubmit)}
-        className='flex flex-wrap gap-3 '
-      >
-        <div className='relative min-w-36 w-48 lg:w-56'>
-          <input
-            type='text'
-            placeholder='Firstname'
-            id='name'
-            className={`w-full  py-1 pl-2 rounded-md ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}
-            {...register('name')}
-          />
-          <p className='text-red-800'>{errors.name?.message}</p>
-        </div>
+      <h1 className='text-center text-2xl my-8'>Register Here</h1>
+      <form noValidate onSubmit={handleSubmit(onSubmit)}>
+        <div className='flex flex-wrap gap-3 justify-center max-w-lg border mx-auto'>
+          <div className='relative min-w-36 w-48 lg:w-56'>
+            <input
+              type='text'
+              placeholder='Firstname'
+              id='name'
+              className={`inputClass ${
+                isDarkMode ? 'text-slate-200' : 'text-slate-800'
+              }`}
+              {...register('name')}
+            />
+            <p className='text-red-800'>{errors.name?.message}</p>
+          </div>
 
-        <div className='relative min-w-36 w-48 lg:w-56'>
-          <input
-            type='text'
-            placeholder='Lastname'
-            id='lastname'
-            className={`w-full  py-1 pl-2 rounded-md ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}
-            {...register('lastname')}
-          />
-          <p className='text-red-800'>{errors.lastname?.message}</p>
-        </div>
+          <div className='relative min-w-36 w-48 lg:w-56'>
+            <input
+              type='text'
+              placeholder='Lastname'
+              id='lastname'
+              className={`inputClass ${
+                isDarkMode ? 'text-slate-200' : 'text-slate-800'
+              }`}
+              {...register('lastname')}
+            />
+            <p className='text-red-800'>{errors.lastname?.message}</p>
+          </div>
 
-        <div className='relative min-w-36 w-48 lg:w-56'>
-          <input
-            type='tel'
-            placeholder='Phone Number'
-            id='phone_number'
-            className={`w-full  py-1 pl-2 rounded-md ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}
-            {...register('phone_number')}
-          />
-          <p className='text-red-800'>{errors.phone_number?.message}</p>
-        </div>
-        <div className='relative min-w-36 w-48 lg:w-56'>
-          <input
-            type='email'
-            placeholder='Email Address'
-            id='email'
-            className={`w-full  py-1 pl-2 rounded-md ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}
-            {...register('email')}
-          />
-          <p className='text-red-800'>{errors.email?.message}</p>
-        </div>
+          <div className='relative min-w-36 w-48 lg:w-56'>
+            <input
+              type='tel'
+              placeholder='Phone Number'
+              id='phone_number'
+              className={`inputClass ${
+                isDarkMode ? 'text-slate-200' : 'text-slate-800'
+              }`}
+              {...register('phone_number')}
+            />
+            <p className='text-red-800'>{errors.phone_number?.message}</p>
+          </div>
+          <div className='relative min-w-36 w-48 lg:w-56'>
+            <input
+              type='email'
+              placeholder='Email Address'
+              id='email'
+              className={`inputClass ${
+                isDarkMode ? 'text-slate-200' : 'text-slate-800'
+              }`}
+              {...register('email')}
+            />
+            <p className='text-red-800'>{errors.email?.message}</p>
+          </div>
 
-        <div className='relative min-w-36 w-48 lg:w-56'>
-          <input
-            type='password'
-            placeholder='Password'
-            id='password'
-            className={`w-full  py-1 pl-2 rounded-md ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}
-            {...register('password')}
-          />
-          <input
-            type='checkbox'
-            className='absolute right-2 top-2.5'
-            onClick={() => {
-              showInput('password');
-            }}
-          />
-          <p className='text-red-800'>{errors.password?.message}</p>
-        </div>
+          <div className='relative min-w-36 w-48 lg:w-56'>
+            <input
+              type='password'
+              placeholder='Password'
+              id='password'
+              className={`inputClass ${
+                isDarkMode ? 'text-slate-200' : 'text-slate-800'
+              }`}
+              {...register('password')}
+            />
+            <input
+              type='checkbox'
+              className='absolute right-2 top-2.5'
+              onClick={() => {
+                showInput('password');
+              }}
+            />
+            <p className='text-red-800'>{errors.password?.message}</p>
+          </div>
 
-        <div className='relative min-w-36 w-48 lg:w-56'>
-          <input
-            type='password'
-            placeholder='Repeat Password'
-            id='repeat_password'
-            className={`w-full  py-1 pl-2 rounded-md ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}
-            {...register('repeat_password')}
-          />
-          <input
-            type='checkbox'
-            className='absolute right-2 top-2.5'
-            onClick={() => {
-              showInput('repeat_password');
-            }}
-          />
-          <p className='text-red-800 w-full'>
-            {errors.repeat_password?.message}
-          </p>
+          <div className='relative min-w-36 w-48 lg:w-56'>
+            <input
+              type='password'
+              placeholder='Repeat Password'
+              id='repeat_password'
+              className={`inputClass ${
+                isDarkMode ? 'text-slate-200' : 'text-slate-800'
+              }`}
+              {...register('repeat_password')}
+            />
+            <input
+              type='checkbox'
+              className='absolute right-2 top-2.5'
+              onClick={() => {
+                showInput('repeat_password');
+              }}
+            />
+            <p className='errorPara'>{errors.repeat_password?.message}</p>
+          </div>
         </div>
-        <button type='submit' className='btn btn-neutral'>
-          Register
-        </button>
+        <div className='flex justify-center'>
+          <button type='submit' className='btn btn-neutral '>
+            Join now
+          </button>
+        </div>
       </form>
       <Toaster richColors />
     </div>

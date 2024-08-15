@@ -70,12 +70,12 @@ function TourForm() {
             type='text'
             placeholder='Tour Name'
             id='text'
-            className={`w-full  py-1 pl-2 rounded-md  ${
+            className={`inputClass  ${
               isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('name')}
           />
-          <p className='text-red-800 w-full'>{errors.name?.message}</p>
+          <p className='errorPara'>{errors.name?.message}</p>
         </div>
 
         <div className='relative w-64  '>
@@ -83,24 +83,24 @@ function TourForm() {
             type='text'
             placeholder='Location'
             id='text'
-            className={`w-full  py-1 pl-2 rounded-md  ${
+            className={`inputClass  ${
               isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('location')}
           />
-          <p className='text-red-800 w-full'>{errors.location?.message}</p>
+          <p className='errorPara'>{errors.location?.message}</p>
         </div>
         <div className='relative w-64  '>
           <input
             type='text'
             placeholder='Image URL'
             id='text'
-            className={`w-full  py-1 pl-2 rounded-md  ${
+            className={`inputClass  ${
               isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('image_url')}
           />
-          <p className='text-red-800 w-full'>{errors.image_url?.message}</p>
+          <p className='errorPara'>{errors.image_url?.message}</p>
         </div>
 
         <div className={`relative w-64 ${!isGroup && 'sm:col-span-2'}`}>
@@ -130,7 +130,7 @@ function TourForm() {
               />
             </label>
           </div>
-          <p className='text-red-800 w-full'>{errors.is_group?.message}</p>
+          <p className='errorPara'>{errors.is_group?.message}</p>
         </div>
 
         {isGroup && (
@@ -141,12 +141,12 @@ function TourForm() {
               placeholder='Participant amount'
               min='2'
               // defaultChecked='3'
-              className={`w-full  py-1 pl-2 rounded-md  ${
+              className={`inputClass  ${
                 isDarkMode ? 'text-slate-200' : 'text-slate-800'
               }`}
               {...register('maximum_participants')}
             />
-            <p className='text-red-800 w-full'>
+            <p className='errorPara'>
               {errors.maximum_participants?.message}
             </p>
           </div>
@@ -165,7 +165,7 @@ function TourForm() {
             className='w-full rounded-md p-2'
             {...register('description')}
           />
-          <p className='text-red-800 w-full'>{errors.description?.message}</p>
+          <p className='errorPara'>{errors.description?.message}</p>
         </div>
         <button
           type='submit'

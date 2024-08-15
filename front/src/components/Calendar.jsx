@@ -4,7 +4,7 @@ import BasicModal from './Modal';
 import { useState } from 'react';
 import { DateTime } from 'luxon';
 
-export default function MyCalendar({ eventData }) {
+export default function MyCalendar({ eventData, setShowRegistration }) {
   const { dates, name } = eventData;
   console.log(eventData);
   const [open, setOpen] = useState(false);
@@ -57,6 +57,7 @@ export default function MyCalendar({ eventData }) {
           setOpen={setOpen}
           eventTitle={eventTitle}
           eventTime={eventTime}
+          setShowRegistration={setShowRegistration}
         />
       </div>
     </>

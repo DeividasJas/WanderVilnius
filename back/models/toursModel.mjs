@@ -57,6 +57,21 @@ export const pg_getTourById = async (id) => {
   WHERE tours.id = ${id}
   GROUP BY tours.id, tours.name, tours.description, tours.is_group, tours.location, tours.maximum_participants, tours.image_url
   `;
+  console.log(tour);
+  if (tour.length < 1) {
+    const tour = await sql`
+    SELECT 
+  tours.id AS tour_id,
+  tours.name AS name,
+  tours.description AS description,
+  tours.is_group AS is_group,
+  tours.location AS location,
+  tours.maximum_participants AS maximum_participants,
+  tours.image_url AS image_url
+  FROM tours
+  WHERE tours.id = ${id}`;
+    return tour[0];
+  }
   return tour[0];
 };
 

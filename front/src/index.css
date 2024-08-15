@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .inputClass {
+    @apply w-full  py-1 pl-2 rounded-md;
+  }
+  .errorPara {
+    @apply text-red-800 w-full
+  }
+}

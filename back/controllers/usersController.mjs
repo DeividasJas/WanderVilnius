@@ -33,6 +33,21 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+export const getUserByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await pg_getUserByEmail(email);
+
+    if (!user) {
+      return res.status(404).json({ message: 'No user found' });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: error });
+  }
+};
+
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -41,7 +56,7 @@ export const getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found ☹️' });
     }
-    return res.status(200).json(user)
+    return res.status(200).json(user);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error });

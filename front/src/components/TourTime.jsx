@@ -73,7 +73,7 @@ function TourTime() {
               );
             })}
           </select>
-          <p className='text-red-800 w-full'>{errors.tour_id?.message}</p>
+          <p className='errorPara'>{errors.tour_id?.message}</p>
         </div>
 
         <div>
@@ -84,7 +84,7 @@ function TourTime() {
             className='max-w-xs p-2 rounded-md'
             {...register('tour_date_time')}
           />
-          <p className='text-red-800 w-full'>
+          <p className='errorPara'>
             {errors.tour_date_time?.message}
           </p>
         </div>

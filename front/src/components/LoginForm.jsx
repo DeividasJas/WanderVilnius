@@ -63,12 +63,12 @@ const LoginForm = forwardRef((props, ref) => {
             type='email'
             placeholder='Email Address'
             id='email'
-            className={`w-full  py-1 pl-2 rounded-md ${
+            className={`inputClass ${
               isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('email')}
           />
-          <p className='text-red-800 w-full'>{errors.email?.message}</p>
+          <p className='errorPara'>{errors.email?.message}</p>
         </div>
 
         <div className='relative min-w-36 w-48 lg:w-56'>
@@ -76,7 +76,7 @@ const LoginForm = forwardRef((props, ref) => {
             type='password'
             placeholder='Password'
             id='password'
-            className={`w-full  py-1 pl-2 rounded-md ${
+            className={`inputClass ${
               isDarkMode ? 'text-slate-200' : 'text-slate-800'
             }`}
             {...register('password')}
@@ -88,7 +88,7 @@ const LoginForm = forwardRef((props, ref) => {
               showInput('password');
             }}
           />
-          <p className='text-red-800 w-full'>{errors.password?.message}</p>
+          <p className='errorPara'>{errors.password?.message}</p>
         </div>
         <button type='submit' className='btn btn-active btn-neutral'>
           Login

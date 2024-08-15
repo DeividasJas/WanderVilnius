@@ -26,7 +26,7 @@ function ToursDropdown() {
 
   return (
     <li
-      className={`w-fit ${
+      className={`w-fit z-30 ${
         isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-slate-300'
       } rounded-lg px-3 py-1 link dropdown`}
       onClick={toggleDropdown}
