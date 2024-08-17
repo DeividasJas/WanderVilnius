@@ -63,8 +63,6 @@ const LoginForm = forwardRef((props, ref) => {
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col justify-center items-center gap-5'
       >
-        <h1>test</h1>
-
         <FormInput
           inputType={'email'}
           register={register}

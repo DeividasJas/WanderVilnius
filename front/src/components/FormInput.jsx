@@ -21,6 +21,7 @@ function FormInput({
           type={inputType}
           id={id}
           placeholder={placeholder}
+          {...register(registerValue)}
           onClick={() => {
             {
               callback && callback(callbackArg);

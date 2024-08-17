@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useTheme } from '../context/ThemeContext';
 import { signupUser } from '../services/post.mjs';
 import { useNavigate } from 'react-router-dom';
+import FormInput from '../components/FormInput';
 function SignupPage() {
   const { isDarkMode } = useTheme();
   const navigate = useNavigate();
@@ -63,111 +64,173 @@ function SignupPage() {
       }
     } catch (error) {}
   };
+  console.log(register('name'));
+  console.log(errors);
   return (
-    <div>
-      <h1 className=''>Register Here</h1>
-      <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <div className='flex flex-wrap gap-3 justify-center max-w-lg border mx-auto'>
-          <div className='inputDiv'>
-            <input
-              type='text'
-              placeholder='Firstname'
-              id='name'
-              className={`inputClass ${
-                isDarkMode ? 'text-slate-200' : 'text-slate-800'
-              }`}
-              {...register('name')}
+    <>
+      <h1 className='text-center text-2xl my-8'>Please Login</h1>
+      <div>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <div className='flex flex-wrap gap-3 justify-center max-w-lg border mx-auto'>
+            {/* <div className='inputDiv'>
+              <input
+                type='text'
+                placeholder='Firstname'
+                id='name'
+                className={`inputClass ${
+                  isDarkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}
+                {...register('name')}
+              />
+              <p className='text-red-800'>{errors.name?.message}</p>
+            </div> */}
+            <FormInput
+              inputType={'text'}
+              placeholder={'Name'}
+              register={register}
+              registerValue={'name'}
+              errors={errors}
+              id={'name'}
             />
-            <p className='text-red-800'>{errors.name?.message}</p>
-          </div>
+            <FormInput
+              inputType={'text'}
+              placeholder={'Lastname'}
+              register={register}
+              registerValue={'lastname'}
+              errors={errors}
+              id={'lastname'}
+            />
 
-          <div className='inputDiv'>
-            <input
-              type='text'
-              placeholder='Lastname'
-              id='lastname'
-              className={`inputClass ${
-                isDarkMode ? 'text-slate-200' : 'text-slate-800'
-              }`}
-              {...register('lastname')}
-            />
-            <p className='text-red-800'>{errors.lastname?.message}</p>
-          </div>
+            {/* <div className='inputDiv'>
+              <input
+                type='text'
+                placeholder='Lastname'
+                id='lastname'
+                className={`inputClass ${
+                  isDarkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}
+                {...register('lastname')}
+              />
+              <p className='text-red-800'>{errors.lastname?.message}</p>
+            </div> */}
 
-          <div className='inputDiv'>
-            <input
-              type='tel'
-              placeholder='Phone Number'
-              id='phone_number'
-              className={`inputClass ${
-                isDarkMode ? 'text-slate-200' : 'text-slate-800'
-              }`}
-              {...register('phone_number')}
+            <FormInput
+              inputType={'tel'}
+              placeholder={'Phone number'}
+              register={register}
+              registerValue={'phone_number'}
+              errors={errors}
+              id={'phone_number'}
             />
-            <p className='text-red-800'>{errors.phone_number?.message}</p>
-          </div>
-          <div className='inputDiv'>
-            <input
-              type='email'
-              placeholder='Email Address'
-              id='email'
-              className={`inputClass ${
-                isDarkMode ? 'text-slate-200' : 'text-slate-800'
-              }`}
-              {...register('email')}
-            />
-            <p className='text-red-800'>{errors.email?.message}</p>
-          </div>
+            {/* <div className='inputDiv'>
+              <input
+                type='tel'
+                placeholder='Phone Number'
+                id='phone_number'
+                className={`inputClass ${
+                  isDarkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}
+                {...register('phone_number')}
+              />
+              <p className='text-red-800'>{errors.phone_number?.message}</p>
+            </div> */}
 
-          <div className='inputDiv'>
-            <input
-              type='password'
-              placeholder='Password'
-              id='password'
-              className={`inputClass ${
-                isDarkMode ? 'text-slate-200' : 'text-slate-800'
-              }`}
-              {...register('password')}
+            <FormInput
+              inputType={'mail'}
+              placeholder={'Email Address'}
+              register={register}
+              registerValue={'email'}
+              errors={errors}
+              id={'email'}
             />
-            <input
-              type='checkbox'
-              className='absolute right-2 top-2.5'
-              onClick={() => {
-                showInput('password');
-              }}
-            />
-            <p className='text-red-800'>{errors.password?.message}</p>
-          </div>
+            {/* <div className='inputDiv'>
+              <input
+                type='email'
+                placeholder='Email Address'
+                id='email'
+                className={`inputClass ${
+                  isDarkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}
+                {...register('email')}
+              />
+              <p className='text-red-800'>{errors.email?.message}</p>
+            </div> */}
 
-          <div className='inputDiv'>
-            <input
-              type='password'
-              placeholder='Repeat Password'
-              id='repeat_password'
-              className={`inputClass ${
-                isDarkMode ? 'text-slate-200' : 'text-slate-800'
-              }`}
-              {...register('repeat_password')}
+            <FormInput
+              inputType={'password'}
+              placeholder={'Password'}
+              register={register}
+              registerValue={'password'}
+              errors={errors}
+              id={'password'}
+              inputTypeTwo={'checkbox'}
+              callbackTwo={showInput}
+              callbackArgTwo={'password'}
             />
-            <input
-              type='checkbox'
-              className='absolute right-2 top-2.5'
-              onClick={() => {
-                showInput('repeat_password');
-              }}
+
+            {/* <div className='inputDiv'>
+              <input
+                type='password'
+                placeholder='Password'
+                id='password'
+                className={`inputClass ${
+                  isDarkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}
+                {...register('password')}
+              />
+              <input
+                type='checkbox'
+                className='absolute right-2 top-2.5'
+                onClick={() => {
+                  showInput('password');
+                }}
+              />
+              <p className='text-red-800'>{errors.password?.message}</p>
+            </div> */}
+
+            <FormInput
+              inputType={'password'}
+              placeholder={'Repeat Password'}
+              register={register}
+              registerValue={'repeat_password'}
+              errors={errors}
+              id={'repeat_password'}
+              inputTypeTwo={'checkbox'}
+              callbackTwo={showInput}
+              callbackArgTwo={'repeat_password'}
             />
-            <p className='errorPara'>{errors.repeat_password?.message}</p>
+            {/* <div className='inputDiv'>
+              <input
+                type='password'
+                placeholder='Repeat Password'
+                id='repeat_password'
+                className={`inputClass ${
+                  isDarkMode ? 'text-slate-200' : 'text-slate-800'
+                }`}
+                {...register('repeat_password')}
+              />
+              <input
+                type='checkbox'
+                className='absolute right-2 top-2.5'
+                onClick={() => {
+                  showInput('repeat_password');
+                }}
+              />
+              <p className='errorPara'>{errors.repeat_password?.message}</p>
+            </div> */}
           </div>
-        </div>
-        <div className='flex justify-center'>
-          <button type='submit' className='btn btn-neutral '>
-            Join now
-          </button>
-        </div>
-      </form>
-      <Toaster richColors />
-    </div>
+          <div className='flex justify-center'>
+            <button type='submit' className='btn btn-neutral '>
+              Join now
+            </button>
+          </div>
+        </form>
+        <Toaster richColors />
+      </div>
+    </>
   );
 }
 
 export default SignupPage;
+
+//MAKE SURE SHOW PASSWORD CHECKBOX SHOW ONLY DESIRED FIELD. NOT BOTH

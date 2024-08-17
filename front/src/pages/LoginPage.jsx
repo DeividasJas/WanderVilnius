@@ -16,7 +16,6 @@ function LoginPage() {
           </p>
         )}
         <LoginForm />
-
         <p className='text-center mt-3'>
           Do not have an account? <br />
           <span className='underline font-bold'>
