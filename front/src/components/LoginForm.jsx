@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { loginUser } from '../services/post.mjs';
 import { forwardRef } from 'react';
+import FormInput from './FormInput';
 
 const LoginForm = forwardRef((props, ref) => {
   const { isDarkMode } = useTheme();
@@ -36,6 +37,10 @@ const LoginForm = forwardRef((props, ref) => {
     }
   };
 
+  const yolo = (arg) => {
+    console.log(arg);
+  };
+
   const onSubmit = async (formData) => {
     console.log(formData);
     const { status, data } = await loginUser(formData);
@@ -47,7 +52,7 @@ const LoginForm = forwardRef((props, ref) => {
       setTimeout(() => {
         toast.success('Welcome');
         navigate('/about');
-        props.setShowLogin(false)
+        props.setShowLogin(false);
       }, 700);
     }
   };
@@ -58,38 +63,30 @@ const LoginForm = forwardRef((props, ref) => {
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col justify-center items-center gap-5'
       >
-        <div className='inputDiv'>
-          <input
-            type='email'
-            placeholder='Email Address'
-            id='email'
-            className={`inputClass ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}
-            {...register('email')}
-          />
-          <p className='errorPara'>{errors.email?.message}</p>
-        </div>
+        <h1>test</h1>
 
-        <div className='inputDiv'>
-          <input
-            type='password'
-            placeholder='Password'
-            id='password'
-            className={`inputClass ${
-              isDarkMode ? 'text-slate-200' : 'text-slate-800'
-            }`}
-            {...register('password')}
-          />
-          <input
-            type='checkbox'
-            className='absolute right-2 top-2.5'
-            onClick={() => {
-              showInput('password');
-            }}
-          />
-          <p className='errorPara'>{errors.password?.message}</p>
-        </div>
+        <FormInput
+          inputType={'email'}
+          register={register}
+          registerValue={'email'}
+          errors={errors}
+          placeholder={'Email'}
+          // callback={yolo}
+          // callbackArg={'for sure'}
+        />
+        <FormInput
+          inputType={'password'}
+          register={register}
+          registerValue={'password'}
+          errors={errors}
+          placeholder={'Password'}
+          id={'password'}
+          // callback={yolo}
+          // callbackArg={'for sure'}
+          inputTypeTwo={'checkbox'}
+          callbackTwo={showInput}
+          callbackArgTwo={'password'}
+        />
         <button type='submit' className='btn btn-active btn-neutral'>
           Login
         </button>
