@@ -40,7 +40,7 @@ export const pg_getSoloTours = async () => {
   WHERE is_group = false`;
   return groupTours;
 };
-
+// ARRAY_AGG(DISTINCT jsonb_build_object('tour_id', tour_times.id, 'dates', tour_times.tour_date_time )) AS dates,
 export const pg_getTourById = async (id) => {
   const tour = await sql`
   SELECT 
@@ -51,7 +51,7 @@ export const pg_getTourById = async (id) => {
   tours.location AS location,
   tours.maximum_participants AS maximum_participants,
   tours.image_url AS image_url,
-  ARRAY_AGG(tour_times.tour_date_time  ORDER BY tours.id) AS dates
+  ARRAY_AGG(DISTINCT jsonb_build_object('tour_id', tour_times.id, 'dates', tour_times.tour_date_time )) AS dates
   FROM tours
   INNER JOIN tour_times ON tour_times.tour_id = tours.id
   WHERE tours.id = ${id}

@@ -7,16 +7,16 @@ import { Toaster, toast } from 'sonner';
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  try {
-    const codedToken = window.localStorage.getItem('token');
-    useEffect(() => {
+  useEffect(() => {
+    try {
+      const codedToken = window.localStorage.getItem('token');
       if (!codedToken) {
         console.log('notoken');
-
         // move to login from protected route (with router state)
-        return navigate('/login', {
+        navigate('/login', {
           state: { from: 'protected-route' },
         });
+        return;
       }
       if (codedToken) {
         (async () => {
@@ -30,14 +30,15 @@ const ProtectedRoute = ({ children }) => {
           }
         })();
       }
-    }, []);
-
-    // if (!token) {
-    //   return navigate('/login');
-    // }
-    // return children;
-  } catch (error) {
-    console.log(error);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  if (isAuthenticated === null) {
+    return <div>Loading...</div>; // Or a loading spinner
+  }
+  if (isAuthenticated) {
+    return children;
   }
 };
 

@@ -3,10 +3,10 @@ import SearchBar from '../../components/SearchBar';
 import { useLoaderData, useParams } from 'react-router-dom';
 import PagginationButtons from '../../components/PagginationButtons';
 import Sort_limit_order from '../../components/Sort_limit_order';
-import TourCard from '../../components/TourCard';
+import TourCard from './TourCard';
 import { searchTours } from '../../services/get.mjs';
 
-function SoloTours() {
+function AllTours() {
   const soloTourData = useLoaderData();
 
   const { tourType } = useParams();
@@ -75,4 +75,4 @@ function SoloTours() {
   );
 }
 
-export default SoloTours;
+export default AllTours;

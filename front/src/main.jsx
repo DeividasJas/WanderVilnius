@@ -15,24 +15,23 @@ import {
   RouterProvider,
   useParams,
 } from 'react-router-dom';
-import Layout from './Layout.jsx';
+// import Layout from './Layout.jsx';
 import ErrorPage from './Error-page.jsx';
 import Home from './components/Home.jsx';
 import ProfilePage from './pages/profile_page/ProfilePage.jsx';
-import ToursPage from './pages/tours_page/TourPage.jsx';
+import Tour from './pages/tours_page/Tour.jsx';
 import About from './pages/About.jsx';
 import NewsPage from './pages/NewsPage.jsx';
 import ReviewPage from './pages/ReviewPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import SoloTours from './pages/tours_page/SoloTours.jsx';
+import AllTours from './pages/tours_page/AllTours.jsx';
 import TourRegistration from './pages/tours_page/TourRegistration.jsx';
 import ProtectedRoute from './pages/ProtetedRoute.jsx';
-import AuthenticationPage from './pages/AuthenticationPage.jsx';
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <App />,
     children: [
       { path: '/', element: <Home />, errorElement: <ErrorPage /> },
       {
@@ -48,11 +47,6 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: '/authentication',
-        element: <AuthenticationPage />,
         errorElement: <ErrorPage />,
       },
       {
@@ -75,12 +69,12 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <ToursPage />,
+            element: <Tour />,
             errorElement: <ErrorPage />,
           },
           {
             path: '/tours/:tourType',
-            element: <SoloTours />,
+            element: <AllTours />,
             errorElement: <ErrorPage />,
             loader: async ({ params }) => {
               const { tourType } = params;
@@ -90,7 +84,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/tours/:tourType/:tourId',
-            element: <ToursPage />,
+            element: <Tour />,
             errorElement: <ErrorPage />,
             loader: async ({ params }) => {
               const { tourId } = params;

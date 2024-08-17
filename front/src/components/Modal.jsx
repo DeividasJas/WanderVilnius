@@ -1,8 +1,20 @@
-function BasicModal({
-  eventTime,
-  eventTitle,
-  setShowRegistration,
-}) {
+import { registerUserToTour } from '../services/post.mjs';
+import { Toaster, toast } from 'sonner';
+function Modal({ eventTime, eventTitle, eventTime_id, tour_id }) {
+  const userRegistrationForTour = async () => {
+    const response = await registerUserToTour({
+      tour_id: tour_id,
+      tour_time_id: eventTime_id,
+    });
+    console.log(response);
+    if(response.status === 400){
+      toast.error(`${response.data.message}`)
+    }
+    if(response.status === 201){
+      toast.success(`Successfully registered to '${eventTitle}' tour`)
+    }
+
+  };
   return (
     <>
       <dialog id='my_modal_5' className='modal modal-bottom sm:modal-middle'>
@@ -17,7 +29,7 @@ function BasicModal({
                 <button className='btn btn-error'>Cancel</button>
                 <button
                   className='btn btn-success font-bold'
-                  onClick={() => setShowRegistration(true)}
+                  onClick={() => userRegistrationForTour()}
                 >
                   Register
                 </button>
@@ -26,8 +38,9 @@ function BasicModal({
           </div>
         </div>
       </dialog>
+      <Toaster richColors/>
     </>
   );
 }
 
-export default BasicModal;
+export default Modal;

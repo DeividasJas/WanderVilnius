@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const user_url = import.meta.env.VITE_USER;
 const tour_url = import.meta.env.VITE_TOUR;
+const registration_url = import.meta.env.VITE_REGISTRATION;
 
 const token = window.localStorage.getItem('token');
 const config = {
@@ -44,6 +45,16 @@ export const createTour = async (formData) => {
 export const registerTourTime = async (formData) => {
   try {
     const response = await axios.post(`${tour_url}/time`, formData, config);
+    return response;
+  } catch (error) {
+    console.error(error);
+    return error.response;
+  }
+};
+
+export const registerUserToTour = async (data) => {
+  try {
+    const response = await axios.post(registration_url, data, config);
     return response;
   } catch (error) {
     console.error(error);

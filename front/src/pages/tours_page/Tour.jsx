@@ -1,12 +1,12 @@
 import { useLoaderData, useParams, Outlet } from 'react-router-dom';
 import Calendar from '../../components/Calendar';
 import { useState } from 'react';
-function ToursPage() {
+function Tour() {
   const tourData = useLoaderData();
   const { tourType, tourId } = useParams();
   console.log(tourData);
 
-  const [showRegistration, setShowRegistration] = useState(false);
+  // const [showRegistration, setShowRegistration] = useState(false);
 
   if (tourData.status > 200) {
     return <h1>Something went wrong</h1>;
@@ -45,10 +45,10 @@ function ToursPage() {
             </div>
           </div>
         </div>
-        {showRegistration && <Outlet />}
+        {/* {showRegistration && <Outlet />} */}
         <div className=''>
           {tourData.data.dates ? (
-            <Calendar eventData={tourData.data} setShowRegistration={setShowRegistration} />
+            <Calendar eventData={tourData.data} />
           ) : (
             <p className='text-center mt-10 italic text-2xl font-bold'>
               No scheduled dates
@@ -60,4 +60,4 @@ function ToursPage() {
   }
 }
 
-export default ToursPage;
+export default Tour;
