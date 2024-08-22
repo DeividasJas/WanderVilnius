@@ -1,9 +1,11 @@
+import { useTheme } from '../../context/ThemeContext';
 import { Link, useParams } from 'react-router-dom';
 function TourCard({ tour }) {
   // console.log(tour);
+  const { isDarkMode } = useTheme();
   const { tourType } = useParams();
   return (
-    <div className='card md:card-side bg-base-100 shadow-xl flex'>
+    <div className='card md:card-side bg-base-300 shadow-xl flex'>
       <figure className='shrink-0 border md:w-44 md:h-full md:max-h-56 overflow-hidden'>
         {' '}
         {/* Add overflow-hidden */}

@@ -48,12 +48,26 @@ export default function MyCalendar({ eventData }) {
           eventClick={handleEventClick}
           eventMouseEnter={handleMouseEnter}
           eventDidMount={(info) => {
+
             const tooltip = new Tooltip(info.el, {
               title: info.event.extendedProps.description || info.event.title, // Fallback to event title if description is missing
               placement: 'top',
               trigger: 'hover',
               container: 'body',
               // TO ADD TOOLTIP STYLES GOT TO WRITTE CSS FIEL CLASSES LIKE IN : https://codepen.io/pen?editors=0110
+            });
+            // Store the tooltip instance on the element for later disposal
+            info.el._tooltip = tooltip;
+            // info.el.addEventListener('mouseenter', () => {
+            //   tooltip.show()
+            // })
+
+            // info.el.addEventListener('mouseleave', () => {
+            //   tooltip.hide()
+            // })
+            // Dispose of the tooltip when the mouse leaves the event element
+            info.el.addEventListener('mousedown', () => {
+              tooltip.dispose();
             });
             // info.el.style.backgroundColor = 'lightblue'; // Example color
             // info.el.style.borderColor = 'blue'; // Optionally, you can set the border color too

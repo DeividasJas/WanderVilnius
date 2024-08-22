@@ -117,7 +117,7 @@ export const signupUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    // console.log(email, password, 1234);
     if (!email || !password) {
       return res
         .status(400)

@@ -62,14 +62,14 @@ function Sort_limit_order({ setSortTour, setOrder, setLimit }) {
             tabIndex={0}
             className='dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow'
           >
-            <li className='disabled'>Sort By</li>
+            <li className='disabled'>Show per page</li>
             <li>
               <a
                 onClick={(e) => {
-                  setSortTour(e.target.textContent);
+                  setLimit(parseInt(e.target.textContent));
                 }}
               >
-                Name
+                2
               </a>
             </li>
             <li>

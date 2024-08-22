@@ -36,6 +36,7 @@ function AllTours() {
         const results = await searchTours(queryParams, tourType);
         if (results.status === 200) {
           setTours(results.data);
+          setPage(1);
         }
       })();
     } catch (error) {}

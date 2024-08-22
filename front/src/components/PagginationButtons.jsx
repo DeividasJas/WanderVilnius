@@ -1,5 +1,5 @@
 function PagginationButtons({ setPage, dataLength, limit }) {
-//   console.log(dataLength, limit);
+  //   console.log(dataLength, limit);
   const pages = [];
   const pageCount =
     dataLength % limit
@@ -11,22 +11,8 @@ function PagginationButtons({ setPage, dataLength, limit }) {
   }
 
   return (
-    <>
-      {/* <Pagination
-        count={
-          data.length % limit
-            ? Math.floor(data.length / limit) + 1
-            : Math.floor(data.length / limit)
-        }
-        color='primary'
-        onChange={(e, value) => setPage(value)}
-      /> */}
-
+    <div className="flex justify-center m-5">
       <div className='join'>
-        {/* <button className='join-item btn'>1</button>
-        <button className='join-item btn btn-active'>2</button>
-        <button className='join-item btn'>3</button>
-        <button className='join-item btn'>4</button> */}
         {pages.map((page, index) => (
           <button
             key={index}
@@ -39,7 +25,7 @@ function PagginationButtons({ setPage, dataLength, limit }) {
           </button>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
