@@ -1,6 +1,4 @@
-import { useRef, useState } from 'react';
-
-function SearchBar({ setSearch, search }) {
+function SearchBar({ setSearch }) {
   const handleChange = (e) => {
     setSearch(e.target.value);
     // console.log(search);

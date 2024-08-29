@@ -3,13 +3,13 @@ import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
+// import { useTheme } from '../context/ThemeContext';
 import { loginUser } from '../services/post.mjs';
 import { forwardRef } from 'react';
 import FormInput from './FormInput';
 
 const LoginForm = forwardRef((props, ref) => {
-  const { isDarkMode } = useTheme();
+  // const { isDarkMode } = useTheme();
   const navigate = useNavigate();
   const formSchema = yup.object().shape({
     email: yup
@@ -35,10 +35,6 @@ const LoginForm = forwardRef((props, ref) => {
     } else {
       x.type = 'password';
     }
-  };
-
-  const yolo = (arg) => {
-    console.log(arg);
   };
 
   const onSubmit = async (formData) => {

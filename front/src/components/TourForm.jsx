@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useState } from 'react';
 import { createTour } from '../services/post.mjs';
@@ -10,7 +10,7 @@ import { createTour } from '../services/post.mjs';
 function TourForm() {
   const [isGroup, setIsGroup] = useState(false);
   const { isDarkMode } = useTheme();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const formSchema = yup.object().shape({
     name: yup
       .string()

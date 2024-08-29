@@ -2,12 +2,12 @@ import { useForm } from 'react-hook-form';
 import { Toaster, toast } from 'sonner';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useTheme } from '../context/ThemeContext';
+// import { useTheme } from '../context/ThemeContext';
 import { signupUser } from '../services/post.mjs';
 import { useNavigate, Link } from 'react-router-dom';
 import FormInput from '../components/FormInput';
 function SignupPage() {
-  const { isDarkMode } = useTheme();
+
   const navigate = useNavigate();
   const phoneRegex = new RegExp(
     '^\\+?(?:\\d{1,3})?[-.\\s]?(?:\\(?\\d{1,4}\\)?[-.\\s]?)?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$'
@@ -61,7 +61,9 @@ function SignupPage() {
           navigate('/about');
         }, 1000);
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error(error);
+    }
   };
   console.log(register('name'));
   console.log(errors);

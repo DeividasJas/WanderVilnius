@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { getUserByEmail } from '../services/get.mjs';
 import { useEffect, useState } from 'react';
-import { Toaster, toast } from 'sonner';
 
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();

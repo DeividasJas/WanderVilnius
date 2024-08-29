@@ -13,7 +13,7 @@ function Sort_limit_order({ setSortTour, setOrder, setLimit }) {
             <li className='disabled'>Order By</li>
             <li>
               <a
-                onClick={(e) => {
+                onClick={() => {
                   setOrder('ASC');
                 }}
               >
@@ -22,7 +22,7 @@ function Sort_limit_order({ setSortTour, setOrder, setLimit }) {
             </li>
             <li>
               <a
-                onClick={(e) => {
+                onClick={() => {
                   setOrder('DESC');
                 }}
               >

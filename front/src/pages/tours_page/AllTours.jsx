@@ -33,13 +33,14 @@ function AllTours() {
   useEffect(() => {
     try {
       (async () => {
-        const results = await searchTours(queryParams, tourType);
+        // used to be queryParams have changed to queryString hopefully that doesnt break the code
+        const results = await searchTours(queryString, tourType);
         if (results.status === 200) {
           setTours(results.data);
           setPage(1);
         }
       })();
-    } catch (error) {}
+    } catch (error) {console.error(error);}
   }, [page, limit, search, sort, order, tourType]);
   return (
     <>

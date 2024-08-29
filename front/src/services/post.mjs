@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const user_url = import.meta.env.VITE_USER;
-const tour_url = import.meta.env.VITE_TOUR;
-const registration_url = import.meta.env.VITE_REGISTRATION;
+const user_url = import.meta.env.VITE_API + '/user'
+const tour_url = import.meta.env.VITE_API + '/tour';
+const registration_url = import.meta.env.VITE_API + '/registration';
 
+console.log(user_url);
 const token = window.localStorage.getItem('token');
 const config = {
   headers: { Authorization: `Bearer ${token}` },
@@ -21,6 +22,7 @@ export const signupUser = async (formData) => {
 
 export const loginUser = async (formData) => {
   try {
+    console.log(user_url);
     const response = await axios.post(`${user_url}/login`, formData);
     console.log(`${user_url}/login`);
     return response;

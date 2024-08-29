@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const tour_url = import.meta.env.VITE_TOUR;
-const user_url = import.meta.env.VITE_USER;
+const user_url = import.meta.env.VITE_API + '/user'
+const tour_url = import.meta.env.VITE_API + '/tour';
 const token = window.localStorage.getItem('token');
 const config = {
   headers: { Authorization: `Bearer ${token}` },

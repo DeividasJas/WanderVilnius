@@ -1,9 +1,8 @@
-import { useLoaderData, useParams, Outlet } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import Calendar from '../../components/Calendar';
-import { useState } from 'react';
 function Tour() {
   const tourData = useLoaderData();
-  const { tourType, tourId } = useParams();
+  // const { tourType, tourId } = useParams();
   console.log(tourData);
 
   // const [showRegistration, setShowRegistration] = useState(false);

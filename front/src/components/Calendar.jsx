@@ -24,13 +24,13 @@ export default function MyCalendar({ eventData }) {
     document.getElementById('my_modal_5').showModal();
   };
 
-  const handleMouseEnter = (info) => {
+  // const handleMouseEnter = (info) => {
     // Custom logic for mouse enter
-  };
+  // };
 
-  const handleMouseLeave = (info) => {
+  // const handleMouseLeave = (info) => {
     // Custom logic for mouse leave
-  };
+  // };
 
   return (
     <>
@@ -46,7 +46,7 @@ export default function MyCalendar({ eventData }) {
           }}
           titleFormat={{ year: 'numeric', month: 'long' }} // Maintain title format
           eventClick={handleEventClick}
-          eventMouseEnter={handleMouseEnter}
+          // eventMouseEnter={handleMouseEnter}
           eventDidMount={(info) => {
 
             const tooltip = new Tooltip(info.el, {

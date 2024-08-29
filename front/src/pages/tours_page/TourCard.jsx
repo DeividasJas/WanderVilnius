@@ -1,8 +1,8 @@
-import { useTheme } from '../../context/ThemeContext';
+// import { useTheme } from '../../context/ThemeContext';
 import { Link, useParams } from 'react-router-dom';
 function TourCard({ tour }) {
   // console.log(tour);
-  const { isDarkMode } = useTheme();
+  // const { isDarkMode } = useTheme();
   const { tourType } = useParams();
   return (
     <div className='card md:card-side bg-base-300 shadow-xl flex'>

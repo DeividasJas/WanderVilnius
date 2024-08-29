@@ -4,16 +4,13 @@ import App from './App.jsx';
 import './index.css';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import {
-  getAllTours,
-  getGroupTours,
-  getSoloTours,
   getTourById,
   getTours,
 } from './services/get.mjs';
 import {
   createBrowserRouter,
   RouterProvider,
-  useParams,
+  // useParams,
 } from 'react-router-dom';
 // import Layout from './Layout.jsx';
 import ErrorPage from './Error-page.jsx';
