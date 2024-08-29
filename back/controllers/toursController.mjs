@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime } from "luxon";
 import {
   pg_deleteTour,
   pg_deleteTourTime,
@@ -9,11 +9,11 @@ import {
   pg_postTour,
   pg_registerNewTourTime,
   pg_searchTour,
-} from '../models/toursModel.mjs';
+} from "../models/toursModel.mjs";
 
 export const postTour = async (req, res) => {
   try {
-    console.log('hello');
+    console.log("hello");
     let {
       name,
       description,
@@ -29,7 +29,7 @@ export const postTour = async (req, res) => {
       is_group,
       location,
       maximum_participants,
-      image_url
+      image_url,
     );
 
     if (!is_group) {
@@ -37,10 +37,10 @@ export const postTour = async (req, res) => {
     }
 
     if (
-      typeof is_group !== 'boolean' ||
-      typeof maximum_participants !== 'number'
+      typeof is_group !== "boolean" ||
+      typeof maximum_participants !== "number"
     ) {
-      return res.status(409).json({ message: 'Wrong format' });
+      return res.status(409).json({ message: "Wrong format" });
     }
     // Not posting registered participants here
     // because in this query we are just stating maximum capacity of the tour
@@ -51,11 +51,11 @@ export const postTour = async (req, res) => {
       is_group,
       location,
       parseInt(maximum_participants),
-      image_url
+      image_url,
     );
 
-    if (typeof newTour.id !== 'number') {
-      return res.status(422).json({ message: 'Failed to create new tour' });
+    if (typeof newTour.id !== "number") {
+      return res.status(422).json({ message: "Failed to create new tour" });
     }
     return res.status(201).json(newTour);
   } catch (error) {
@@ -69,7 +69,7 @@ export const getGroupTours = async (req, res) => {
     const groupTours = await pg_getGroupTours();
 
     if (groupTours.length < 1) {
-      return res.status(404).json({ message: 'No group tours has been found' });
+      return res.status(404).json({ message: "No group tours has been found" });
     }
     return res.status(200).json(groupTours);
   } catch (error) {
@@ -85,7 +85,7 @@ export const getSoloTours = async (req, res) => {
     if (soloTours.length < 1) {
       return res
         .status(404)
-        .json({ message: 'No tour for one person has been found' });
+        .json({ message: "No tour for one person has been found" });
     }
     return res.status(200).json(soloTours);
   } catch (error) {
@@ -97,12 +97,12 @@ export const getSoloTours = async (req, res) => {
 export const getTourById = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log('IAM HERE');
+    console.log("IAM HERE");
     console.log(id);
     const tour = await pg_getTourById(id);
     console.log(tour);
     if (!tour) {
-      return res.status(404).json({ message: 'No tour found by id 👀' });
+      return res.status(404).json({ message: "No tour found by id 👀" });
     }
     return res.status(200).json(tour);
   } catch (error) {
@@ -127,7 +127,7 @@ export const deleteTourById = async (req, res) => {
     const deletedTour = await pg_deleteTour(id);
 
     if (!deletedTour) {
-      return res.status(200).json({ message: 'Tour was successfully deleted' });
+      return res.status(200).json({ message: "Tour was successfully deleted" });
     }
   } catch (error) {
     console.log(error);
@@ -142,7 +142,7 @@ export const registerNewTourTime = async (req, res) => {
 
     // Create a Luxon DateTime object with the Vilnius time zone
     const dateInVilnius = DateTime.fromISO(tour_date_time, {
-      zone: 'Europe/Vilnius',
+      zone: "Europe/Vilnius",
     });
 
     // Convert to UTC
@@ -164,7 +164,7 @@ export const deleteTourTime = async (req, res) => {
     const { id } = req.params;
     const deletedTime = await pg_deleteTourTime(id);
     console.log(deletedTime);
-    return res.status(200).json({ message: 'Successfully deleted' });
+    return res.status(200).json({ message: "Successfully deleted" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error });
@@ -174,12 +174,12 @@ export const deleteTourTime = async (req, res) => {
 export const searchTour = async (req, res) => {
   try {
     let { tourType } = req.params;
-    if (tourType === 'individual') {
+    if (tourType === "individual") {
       tourType = false;
-    } else if (tourType === 'group') {
+    } else if (tourType === "group") {
       tourType = true;
     } else {
-      return res.status(404).json({ message: 'Bad request' });
+      return res.status(404).json({ message: "Bad request" });
     }
 
     const results = await pg_searchTour(req.query, tourType);

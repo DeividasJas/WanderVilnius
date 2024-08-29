@@ -1,16 +1,16 @@
-import app from './app.mjs';
-import sql from './postgres.mjs';
-import dotenv from 'dotenv';
+import app from "./app.mjs";
+import sql from "./postgres.mjs";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const port = process.env.PORT || 3001;
+const port = process.env.APP_PORT || 3001;
 (async () => {
   try {
     await sql`SELECT 1+1 as result`;
-    console.log('Successfully connected');
+    console.log("Successfully connected");
   } catch (error) {
-    console.log('Error while connecting to database:');
+    console.log("Error while connecting to database:", error);
   }
 })();
 
@@ -20,4 +20,3 @@ app.listen(port, (error) => {
   }
   console.log(`Server started and listening requests on port ${port}`);
 });
- 

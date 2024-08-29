@@ -1,4 +1,4 @@
-import sql from '../postgres.mjs';
+import sql from "../postgres.mjs";
 
 export const pg_getAllUsers = async () => {
   try {
@@ -16,9 +16,9 @@ export const pg_getUserById = async (id) => {
   const user = await sql`
   SELECT id, name, lastname, email, phone_number, role
   FROM users
-  WHERE id = ${id}`
-  return user[0]
-}
+  WHERE id = ${id}`;
+  return user[0];
+};
 
 export const pg_getUserByEmail = async (email) => {
   const user = await sql`
@@ -39,7 +39,7 @@ export const pg_postUser = async (
   lastname,
   email,
   phone_number,
-  password
+  password,
 ) => {
   try {
     const newUser = await sql`

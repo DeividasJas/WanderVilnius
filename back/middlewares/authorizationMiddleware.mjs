@@ -1,31 +1,31 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-const openToken = (req) => {
+const openToken = (req, res) => {
   try {
     let token;
     const headerToken = req.headers.authorization;
-    if (headerToken && headerToken.startsWith('Bearer')) {
-      token = headerToken.split(' ')[1];
+    if (headerToken && headerToken.startsWith("Bearer")) {
+      token = headerToken.split(" ")[1];
     }
     // console.log(headerToken);
     if (!token) {
-      return res.status(401).json({ error: 'Go home, you are not allowed.🛑' });
+      return res.status(401).json({ error: "Go home, you are not allowed.🛑" });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     return decoded;
   } catch (error) {
-    throw new Error('Error while decoding token');
+    throw new Error(`Error while decoding token: ${error}`);
   }
 };
 
 export const isAdmin = (req, res, next) => {
   try {
     const decoded = openToken(req);
-    if (decoded.role !== 'admin') {
-      return res.status(401).json({ message: 'Premission denied' });
+    if (decoded.role !== "admin") {
+      return res.status(401).json({ message: "Premission denied" });
     }
-    console.log('Decoded role is: ', decoded.role);
+    console.log("Decoded role is: ", decoded.role);
     next();
   } catch (error) {
     console.error(error);
@@ -36,11 +36,11 @@ export const isAdmin = (req, res, next) => {
 export const isUser = async (req, res, next) => {
   try {
     const decoded = openToken(req);
-    if (decoded.role !== 'user' && decoded.role !== 'admin') {
-      return res.status(401).json({ message: 'Premission denied' });
+    if (decoded.role !== "user" && decoded.role !== "admin") {
+      return res.status(401).json({ message: "Premission denied" });
     }
     req.user = decoded;
-    console.log('Decoded role is: ', decoded.role);
+    console.log("Decoded role is: ", decoded.role);
     next();
   } catch (error) {
     console.error(error);

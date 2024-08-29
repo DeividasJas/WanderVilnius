@@ -1,4 +1,4 @@
-import sql from '../postgres.mjs';
+import sql from "../postgres.mjs";
 
 export const pg_getGuideByEmail = async (email) => {
   const user = await sql`
@@ -14,7 +14,14 @@ export const pg_getGuideByPhoneNumber = async (phone_number) => {
   return user[0];
 };
 
-export const pg_postGuide = async (name, lastname, description, phone_number, email, age) => {
+export const pg_postGuide = async (
+  name,
+  lastname,
+  description,
+  phone_number,
+  email,
+  age,
+) => {
   try {
     const new_guide = await sql`
     INSERT INTO guides (name, lastname, description, phone_number, email, age)
@@ -32,12 +39,12 @@ export const pg_getGuideById = async (id) => {
   const guide = await sql`
   SELECT * 
   FROM guides
-  WHERE ID = ${id}`
-  return guide[0]
-}
+  WHERE ID = ${id}`;
+  return guide[0];
+};
 
 export const pg_getGuides = async () => {
   const guides = await sql`
-  SELECT * FROM guides`
-  return guides
-}
+  SELECT * FROM guides`;
+  return guides;
+};

@@ -1,12 +1,10 @@
-import sql from '../postgres.mjs';
+import sql from "../postgres.mjs";
 
 export const pg_newRegistration = async (user_id, tour_id, tour_time_id) => {
   await sql`
   UPDATE tour_times
     SET registered_participants = registered_participants + 1
     WHERE id = ${tour_time_id}`;
-
-
 
   const registration = await sql`
     INSERT INTO registrations (user_id, tour_id, tour_time_id)

@@ -1,4 +1,4 @@
-import sql from '../postgres.mjs';
+import sql from "../postgres.mjs";
 
 export const pg_postTour = async (
   name,
@@ -6,7 +6,7 @@ export const pg_postTour = async (
   is_group,
   location,
   maximum_participants,
-  image_url
+  image_url,
 ) => {
   try {
     const newTour = await sql`
@@ -105,7 +105,7 @@ export const pg_searchTour = async (reqQuery, is_group) => {
   let { search, sort, page, limit, order } = reqQuery;
   console.log(reqQuery);
 
-  console.log('cuisines.name');
+  console.log("cuisines.name");
   page = parseInt(page);
   limit = parseInt(limit);
 
@@ -125,13 +125,7 @@ export const pg_searchTour = async (reqQuery, is_group) => {
     tours.image_url AS image_url
   FROM tours
   WHERE tours.is_group = ${is_group}
-    ${
-      search
-        ? sql`AND (
-      tours.name ILIKE ${searchPattern}
-    )`
-        : sql``
-    }  
+    ${search ? sql`AND (tours.name ILIKE ${searchPattern})` : sql``}
     ${sql.unsafe(orderByClause)}
     LIMIT ${limit}
     OFFSET ${offset};
